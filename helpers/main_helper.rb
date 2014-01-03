@@ -24,7 +24,13 @@ module GitHubHelper
   #   end
   # end
 
-  def all_commits(user)
+  def all_commits(user, start_date="2000-01-01T23:59:59Z", end_date=Time.now.iso8601)
+    start_date = start_date + "T00:00:00" if start_date.length == 10
+    end_date = end_date + "T00:00:00" if end_date.length == 10
+
+    puts start_date
+    puts end_date
+
     repos_uri = "https://api.github.com/users/#{user}/repos"
     repos = get_json(repos_uri)
     user_uri = "https://api.github.com/repos/#{user}/"
@@ -36,7 +42,9 @@ module GitHubHelper
       repos.each do |repo| 
         repo_commits_url = repo['commits_url'].to_s[0..-7]
         puts repo_commits_url
-        repo_commit_count = get_json(repo_commits_url).count
+        time_restricted_commits_url = repo_commits_url + "?since=" + start_date + "&until=" + end_date
+        puts time_restricted_commits_url
+        repo_commit_count = get_json(time_restricted_commits_url).count
         total_commit_count += repo_commit_count
       end
       # commits = get_json("https://api.github.com/repos/#{user}/#{repos[0]["name"]}/commits").count
