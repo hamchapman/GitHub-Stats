@@ -1,0 +1,30 @@
+<section class="container">
+  <h2>
+    GitHub API Madness
+  </h2>
+
+  <form action="/" method="post">
+    Enter username, start date and end date to get total commits for given user in given time frame.
+    <br>
+    <br>
+    <label for="username">Username:</label>
+    <input class="text" name="username" type="text"></input>
+    <label for="username">Start Date:</label>
+    <input class="text" name="start_date" type="text" placeholder="YYYY-MM-DD" ></input>
+    <label for="username">End Date:</label>
+    <input class="text" name="end_date" type="text" placeholder="YYYY-MM-DD" ></input>
+    <input class="button" type="submit" value="Send"></input>
+  </form>
+  <section id="result">
+    <% if @languages %>
+      <%= @languages %>
+    <% end %>
+
+    <br>
+    <br>
+    Total commits:
+    <% if @commits %>
+      <%= @commits %>
+    <% end %>
+  </section>
+</section>
